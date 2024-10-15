@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <body>
+    <my-test data-testid="my-testid"></my-test>
+
+    <template id="my-template">
+      <style>
+        :host([data-state="opening"]) div {
+          animation-name: open;
+          animation-duration: 0s;
+          /* Fill mode seems to make it worse. */
+          animation-fill-mode: forwards;
+          animation-timing-function: ease-in;
+        }
+
+        @keyframes open {
+          from {
+            opacity: 0;
+          }
+
+          to {
+            opacity: 1;
+          }
+        }
+      </style>
+      <div>My Shadow Root Content</div>
+    </template>
+
+    <script>
+      class MyTest extends HTMLElement {
+        connectedCallback() {
+          this.setAttribute("data-state", "closed");
+          this.attachShadow({ mode: "open" });
+
+          this.init();
+        }
+
+        async init() {
+          // Simulate firstUpdated() of lit framework
+          await Promise.resolve();
+
+          this.shadowRoot.appendChild(
+            document.getElementById("my-template").content,
+          );
+
+          const div = this.shadowRoot.querySelector("div");
+
+          div.addEventListener("animationend", () => {
+            this.setAttribute("data-state", "opened");
+          });
+
+          // This line seems to cause the animationend event not to be fired
+          console.log(div.scrollHeight);
+          this.open();
+        }
+
+        open() {
+          this.setAttribute("data-state", "opening");
+        }
+      }
+
+      customElements.define("my-test", MyTest);
+    </script>
+  </body>
+</html>
