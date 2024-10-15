@@ -2,7 +2,7 @@
 
 ### Steps to reproduce Bug
 
-We recommend to use Github Codespaces where it's easy reproducible: https://codespaces.new/jeripeierSBB/chromium-animationend-bug
+We recommend using Github Codespaces where it's easily reproducible: https://codespaces.new/jeripeierSBB/chromium-animationend-bug
 
 1. run `npm run repeat-test`
 2. See test error as data-state was not set as `animationend` event was not fired
