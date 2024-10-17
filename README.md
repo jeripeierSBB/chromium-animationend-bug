@@ -1,4 +1,4 @@
-**Bug is only reproducible on Linux in headless mode.**
+**Bug is only reproducible on Linux**
 
 ### Steps to reproduce Bug
 
